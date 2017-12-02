@@ -7,6 +7,7 @@ public class Graph {
 	private int[][] adjMatrrix;
 	private int nVertices;
 	private StackX theStack;
+	private Queue theQueue;
 	
 	public Graph(){
 		vertexList = new Vertex[MAX_VERTICES];
@@ -22,6 +23,7 @@ public class Graph {
 		
 		//make the stack
 		theStack = new StackX();
+		theQueue = new Queue();
 	}
 	
 	//create a new vertex and all it to the vertex list
@@ -80,4 +82,61 @@ public class Graph {
 		}
 		
 	}//end dfs
+	
+	//using breadth-first search for the graph
+	public void bfs(){
+		//begin at the vertex and make it true indicating that you have visited it
+		vertexList[0].wasVisited = true;
+		displayVertex(0);
+		theQueue.enQueue(0);
+		
+		int v2;
+		
+		while(!theQueue.isEmpty()){
+			int v1 = theQueue.deQueue(); // deQueue the first form the queue
+			while((v2 = getAdjacentUnvisitedVertex(v1)) != -1){
+				//perform the stuff above
+				vertexList[v2].wasVisited = true;
+				displayVertex(v2);
+				theQueue.enQueue(v2);
+			}
+		}
+		
+		//new once the while loop exits the reset the flags of the vertices
+		for(int i = 0; i < nVertices; i++){
+			vertexList[i].wasVisited = false;
+		}
+		
+	}
+	
+	//minimum spanning tree using depth-first search for the graph, we need to make few cahnges 
+	public void mst(){
+		//begin at the vertex zero and mark it true for visited
+		vertexList[0].wasVisited = true;
+		//displayVertex(0); // display the vertex
+		theStack.push(0); // push it on to the stack
+		
+		while(!theStack.isEmpty()){
+			//get an unvisited vertex to the top of the stack
+			int currentVertex = theStack.peek(); //added to display the minimum spanning tree
+			int v = getAdjacentUnvisitedVertex(theStack.peek());
+			
+			if(v == -1){
+				theStack.pop();
+			}else{
+				vertexList[v].wasVisited = true;
+				theStack.push(v); // push it on to the stack
+				
+				displayVertex(currentVertex); //added to display the minimum spanning tree
+				displayVertex(v); // display the vertex
+				System.out.print(" ");
+				
+			}
+		}//end of the loop
+		
+		//reset the flags
+		for(int i = 0; i < nVertices; i++){
+			vertexList[i].wasVisited = false;
+		}
+	}//end mst
 }

@@ -11,6 +11,7 @@ public class HeapApp {
 		theHeap.insert(20);
 		theHeap.insert(19);
 		theHeap.insert(9);
+		theHeap.insert(30);
 		
 		theHeap.printHeap();
 		
