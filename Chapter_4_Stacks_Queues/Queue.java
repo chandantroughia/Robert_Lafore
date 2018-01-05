@@ -1,49 +1,55 @@
 package Chapter_4_Stacks_Queues;
 
 public class Queue {
-	public int size;
-	public long[] arr;
-	public int front;
-	public int end;
-	public int count;
 	
-	public Queue(int s){
-		size = s;
-		arr = new long[size];
+	private int maxSize;
+	private int[] qArray;
+	private int front;
+	private int rear;
+	private int nItems;
+	
+	public Queue(int size){
+		maxSize = size;
+		qArray = new int[maxSize];
 		front = 0;
-		end = -1;
-		count = 0;
+		rear = -1;
+		nItems = 0;
 	}
 	
-	public void insert(long item){
-		if(end == size - 1){
-			end = -1;
+	
+	public int size(){
+		return nItems;
+	}
+	
+	public int peekFront(){
+		return qArray[front];
+	}
+	
+	public void insert(int value){
+		//deal with wrap-around
+		if(rear == maxSize - 1){
+			rear = -1;
 		}
-		arr[++end] = item;
-		count++;
+		qArray[++rear] = value;
+		nItems++;
 	}
 	
-	public long remove(){
-		long temp = arr[front++];
-		if(front == size)
+	public int delete(){
+		int temp = qArray[front++];
+		//deal with wrap-around
+		if(front == maxSize){
 			front = 0;
-		count--;
+		}
+		nItems--;
 		return temp;
 	}
 	
-	public long peekFront(){
-		return arr[front];
+	public boolean isFull(){
+		return nItems == maxSize;
 	}
 	
 	public boolean isEmpty(){
-		return count == 0;
+		return nItems == 0;
 	}
-	
-	public boolean isFull(){
-		return count == size;
-	}
-	
-	public int size(){
-		return count;
-	}
+
 }

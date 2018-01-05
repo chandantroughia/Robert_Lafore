@@ -1,14 +1,13 @@
 package Chapter_8_BST;
 
-public class Node {
+public class Node
+{
+ int data;
+ Node left, right;
 
-	int data;
-	Node left;
-	Node right;
-	
-	public Node(int val){
-		data = val;
-		left = null;
-		right = null;
-	}
+ public Node(int item)
+ {
+     data = item;
+     left = right = null;
+ }
 }
